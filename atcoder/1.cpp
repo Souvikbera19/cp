@@ -8,10 +8,13 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll n,f;
-    cin >> n >> f;
-    ll val =  n%7;
-    ll ans = ((f+val-1)%7) + 1;
-    cout << ans <<'\n';
+    string s;
+    cin >> s;
+    ll cnt = 0;
+    for(int i =0;i<s.length();i++){
+        if(s[i]=='i'||s[i]=='j')cnt++;
+    }
+    cout << cnt << '\n';
+
     return 0;
 }
