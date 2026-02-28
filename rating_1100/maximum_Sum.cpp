@@ -14,24 +14,19 @@ int main() {
         ll n,k;
         cin >> n >> k;
         vector<ll>v(n);
-        ll sum = 0;
-        for(auto &x:v){
-            cin >> x;
-            sum+=x;
-        }
+        for(auto &x:v) cin >>x;
         sort(v.begin(),v.end());
-        ll l =0,r=n-1;
-        while(k--){
-            if(v[l]+v[l+1]<v[r]){
-                sum-=(v[l]+v[l+1]);
-                l+=2;
-            }
-            else{
-                sum-=v[r];
-                r--;
-            }
+        vector<ll>pref(n+1,0);
+        for(int i = 0;i<n;i++){
+            pref[i+1]=pref[i]+v[i];
         }
-        cout << sum << '\n';
+        ll ans = INT_MIN;
+        for(int i = 0;i<=k;i++){
+            ll val_1 = pref[i*2];
+            ll val_2 = pref[n-k+i];
+            ans=max(ans,val_2-val_1);
+        }
+        cout << ans << '\n';
     }
 
     return 0;

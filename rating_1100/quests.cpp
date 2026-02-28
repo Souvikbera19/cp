@@ -11,19 +11,24 @@ int main() {
     int t;
     cin >> t;
     while(t--){
-        ll n,k;
+        int n,k;
         cin >> n >> k;
-        vector<ll>a(n),b(n);
+        vector<int>a(n),b(n);
         for(auto &x:a) cin >> x;
         for(auto &x:b) cin >> x;
 
-        ll ans =0;
-        ll sum = 0;
-        ll max_b = b[0];
-        for(int i=0;i<min(n,k);i++){
-            sum +=a[i];
-            max_b=max(max_b,b[i]);
-            ans =max(ans,sum+(k-i-1)*max_b);
+        vector<int>pref(n+1,0);
+        for(int i = 1;i<=n;i++){
+            pref[i]=pref[i-1]+a[i-1];
+        }
+        int max_val = b[0];
+        int ans = a[0];
+        for(int i =0;i<n;i++){
+            if(k<=0) break;
+            max_val = max(max_val,b[i]);
+            int val = pref[i+1]+(--k)*max_val;
+            ans = max(ans,val);
+            
         }
 
         cout << ans << '\n';

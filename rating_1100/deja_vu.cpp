@@ -1,14 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-ll powerof2(ll n){
-    ll val = 1;
-    while(n>0){
-        val*=2;
-        n--;
-    }
-    return val;
-}
+
 int main() {
 
 
@@ -20,24 +13,30 @@ int main() {
     while(t--){
         ll n,q;
         cin >> n >> q;
-        vector<ll>a(n),x(q);
-        for(auto &x:a) cin >>x;
-        for(auto &x:x) cin >> x;
-        ll check = 31;
-        for(int i =0;i<q;i++){
-            if(x[i]>=check) continue;
-            ll val = powerof2(x[i]);
-            for(int j =0;j<n;j++){
-                if(a[j]%val==0){
-                    a[j]+=(val/2);
-                }
+        vector<ll>v(n);
+        for(auto &x:v) cin >> x;
+        vector<ll>m(q);
+        for(auto &x:m) cin >> x;
+        for(int i =0;i<n;i++){
+            if(v[i]%(1ll<<m[0])){
+                v[i]+=1ll<<(m[0]-1);
             }
-            check=x[i];
         }
-
-        for(auto it:a) cout << it << ' ';
+        ll check = m[0];
+        for(int i =1;i<q;i++){
+            ll x = m[i];
+            if(check<x&&check!=x){
+               for(int j = 0;j<n;j++){
+                    if(v[j]%(1ll<<x)==0){
+                        v[j]+=1ll<<(x-1);
+                    }
+                }
+                check=x;
+            }
+            else continue;
+        }
+        for(auto it:v) cout << it << ' ';
         cout << '\n';
-
     }
 
     return 0;
