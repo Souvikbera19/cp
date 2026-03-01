@@ -1,39 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
-using ll = long long;
+using ll= long long;
 void solve(){
-    ll n;
+    int n;
     cin >> n;
     vector<ll>v(n);
     for(auto &x:v) cin >> x;
     sort(v.begin(),v.end());
     if(v[0]!=1){
-        cout << "NO" << '\n';
+        cout << "NO\n";
         return;
     }
-    bool cond = true;
-    ll val = v[0];
+    vector<ll>pref(n,0);
+    pref[0]= v[0];
     for(int i =1;i<n;i++){
-        if(val<v[i]){
-            cond = false;
-            break;
-        }
-        val+=v[i];
+        pref[i]=pref[i-1]+v[i];
     }
-    if(cond) cout << "YES" << '\n';
-    else cout << "NO" << '\n';
+
+    for(int i=1;i<=n-1;i++){
+        if(pref[i-1]<v[i]){
+            cout << "NO\n";
+            return;
+        }
+    }
+    cout << "YES\n";
+
+    //for(auto it:pref) cout << it << ' ';
 }
-int main() {
-
-
-    ios::sync_with_stdio(false);
+int main(){
+    ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
     int t;
     cin >> t;
     while(t--){
         solve();
+        
     }
-
-    return 0;
 }
