@@ -14,11 +14,13 @@ void solve(){
     sort(v.begin(),v.end());
     for(int i =0;i<n;i++){
         ll val = v[i];
+        bool cond=0;
         while(mpp.find(val)!=mpp.end()&&mpp[val]!=0){
             mpp[val]--;
             val++;
+            cond=1;
         }
-        if(mpp.find(val)==mpp.end()) cnt++;
+        if(cond)cnt++;
     }
     cout << cnt << '\n';
     
