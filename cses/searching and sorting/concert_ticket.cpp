@@ -14,8 +14,11 @@ int main() {
     vector<ll>max_price(m);
     for(int i =0;i<n;i++)cin >> price[i];
     for(int i =0;i<m;i++) cin >> max_price[i];
+    sort(price.begin(),price.end());
+    for(int i =0;i<m;i++){
+    }
 
-    multiset<ll>mpp;
+
     
 
     return 0;

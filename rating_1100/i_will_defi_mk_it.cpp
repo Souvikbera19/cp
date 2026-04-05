@@ -1,7 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-
+void solve(){
+    ll n,k;
+    cin >> n >> k;
+    vector<ll>heights(n);
+    for(auto &x:heights)cin >> x;
+    ll intialHeight = heights[k-1];
+    set<ll>reqHeights;
+    for(auto &x:heights){
+        if(x>=intialHeight) reqHeights.insert(x);
+    }
+    if(heights.size()==0){
+        cout << "Yes\n";
+        return;
+    }
+    ll waterLevel = 1;
+    ll prevHeight = intialHeight;
+    bool cond = true;
+    for(auto it:reqHeights){
+        ll time= it-prevHeight;
+        if(prevHeight<waterLevel+time-1){
+            cond = false;
+            break;
+        }
+        waterLevel+=time;
+        prevHeight=it;
+    }
+    if(cond)cout << "Yes\n";
+    else cout << "No\n";
+}
 int main() {
 
 
@@ -10,29 +38,9 @@ int main() {
 
     int t;
     cin >> t;
-    while (t--)
-    {
-        ll n,k;
-        cin >> n >> k;
-        vector<ll>h(n);
-        for(auto &x:h) cin >> x;
-        ll in_ht = h[k-1];
-        set<ll>s;
-        for(auto &x:h){
-            if(x>=in_ht) s.insert(x);
-        }
-        bool cond = true;
-        ll prev = in_ht;
-        for(auto x:s){
-            if(x-prev>in_ht) cond = false;
-            prev = x;
-        }
-
-        if(cond) cout << "YES" << '\n';
-        else cout << "NO" << '\n';
-
+    while(t--){
+        solve();
     }
-    
 
     return 0;
 }
