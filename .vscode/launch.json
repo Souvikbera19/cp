@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/souvikbera/cp/rating_800",
-      "program": "/Users/souvikbera/cp/rating_800/build/Debug/outDebug"
+      "cwd": "/Users/souvikbera/cp/rating_900",
+      "program": "/Users/souvikbera/cp/rating_900/build/Debug/outDebug"
     }
   ]
 }
