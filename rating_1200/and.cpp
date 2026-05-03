@@ -56,27 +56,40 @@ vector<ll> sieve(ll n) {
 // -------------------- SOLVE --------------------
 
 void solve() {
-    ll n,m;
-    cin >> n >> m;
-    vector<ll>v(m);
-    multiset<ll>ms;
-    for(int i =0;i<n;i++){
-        ll x;
-        cin >> x;
-        ms.insert(x);
-    }
+    ll n,x;
+    cin >> n >> x;
+    vector<ll>v(n);
     for(auto &x:v)cin >> x;
-    for(int i =0;i<m;i++){
-        auto it = ms.upper_bound(v[i]);
-        if(it==ms.begin()){
-            cout << -1 << '\n';
-        }
-        else{
-            cout << *(--it)<<'\n';
-            ms.erase(it);
+    map<ll,ll>mpp;
+    for(auto it:v) mpp[it]++;
+    for(auto it:mpp){
+        if(it.second>1){
+            cout << 0 << '\n';
+            return;
         }
     }
-
+    // bool cond = false;
+    for(int i =0;i<n;i++){
+        auto it = mpp.find(v[i]&x);
+        if(it!=mpp.end()&&it->first!=v[i]){
+            // cond = true;
+            cout << 1 << '\n';
+            return;
+        }
+    }
+    // cout << -1 << '\n';
+    for(int i =0;i<n;i++){
+        v[i]=v[i]&x;
+    }
+    set<ll>st;
+    for(int x:v){
+        if(st.find(x)==st.end()) st.insert(x);
+        else {
+            cout << 2 << '\n';
+            return;
+        }
+    }
+    cout << -1 << '\n';
 }
 
 // -------------------- MAIN --------------------
@@ -84,11 +97,16 @@ void solve() {
 int main() {
     FastAsFuck;
 
-// #ifndef ONLINE_JUDGE
-//     freopen("input.txt", "r", stdin);
-//     freopen("output.txt", "w", stdout);
-// #endif
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
 
+    // int t = 1;
+    // cin >> t;
+    // while (t--) {
+    //     solve();
+    // }
     solve();
 
     return 0;

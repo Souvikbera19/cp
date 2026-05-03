@@ -56,27 +56,21 @@ vector<ll> sieve(ll n) {
 // -------------------- SOLVE --------------------
 
 void solve() {
-    ll n,m;
-    cin >> n >> m;
-    vector<ll>v(m);
-    multiset<ll>ms;
-    for(int i =0;i<n;i++){
-        ll x;
-        cin >> x;
-        ms.insert(x);
+    ll n;
+    cin >> n;
+    vector<ll>v(n+1),pref(n+1);
+    for(int i =1;i<=n;i++){
+        cin >> v[i];
+        pref[i]=pref[i-1]+v[i];
     }
-    for(auto &x:v)cin >> x;
-    for(int i =0;i<m;i++){
-        auto it = ms.upper_bound(v[i]);
-        if(it==ms.begin()){
-            cout << -1 << '\n';
-        }
-        else{
-            cout << *(--it)<<'\n';
-            ms.erase(it);
-        }
+    ll gain = 0;
+    ll exclude= 0;
+    for(int i =1;i<=n;i++){
+        ll delta = 1ll*i*(i+1)-pref[i];
+        gain = max(gain,delta-exclude);
+        exclude = min(exclude,delta);
     }
-
+    cout << pref[n]+gain << '\n';
 }
 
 // -------------------- MAIN --------------------
@@ -89,7 +83,11 @@ int main() {
 //     freopen("output.txt", "w", stdout);
 // #endif
 
-    solve();
+    int t = 1;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
 
     return 0;
 }

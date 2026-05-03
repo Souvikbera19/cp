@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-
+#define sz 2e5+10
+vector<vector<int>>pfac(sz+1);
 #define FastAsFuck ios::sync_with_stdio(false); cin.tie(nullptr);
 
 // -------------------- MATHEMATICAL UTILITIES --------------------
@@ -56,27 +57,32 @@ vector<ll> sieve(ll n) {
 // -------------------- SOLVE --------------------
 
 void solve() {
-    ll n,m;
-    cin >> n >> m;
-    vector<ll>v(m);
-    multiset<ll>ms;
+    int n;
+    cin >> n;
+    vector<int>a(n),b(n);
+    for(auto &x:a)cin >> x;
+    for(auto &x:b)cin >> x;
+    map<int,int>mpp;
+    int ans = 2;
     for(int i =0;i<n;i++){
-        ll x;
-        cin >> x;
-        ms.insert(x);
-    }
-    for(auto &x:v)cin >> x;
-    for(int i =0;i<m;i++){
-        auto it = ms.upper_bound(v[i]);
-        if(it==ms.begin()){
-            cout << -1 << '\n';
-        }
-        else{
-            cout << *(--it)<<'\n';
-            ms.erase(it);
+        for(int x:pfac[a[i]]){
+            if(mpp[x]>0){
+                ans=0;
+            }
+            mpp[x]++;
         }
     }
 
+    //for 1
+    for(int i =0;i<n;i++){
+        for(int x:pfac[a[i]]) mpp[x]--;
+
+        for(int x:pfac[a[i]+1]){
+            if(mpp[x]>0) ans=min(ans,1);
+        }
+        for(int x:pfac[a[i]])mpp[x]++;
+    }
+    cout << ans << '\n';
 }
 
 // -------------------- MAIN --------------------
@@ -89,7 +95,17 @@ int main() {
 //     freopen("output.txt", "w", stdout);
 // #endif
 
-    solve();
+    int t = 1;
+    cin >> t;
+    for(int i =2;i<=sz;i++){
+        if(!pfac[i].empty()) continue;
+        for(int j = i;j<=sz;j+=i){
+            pfac[j].push_back(i);
+        }
+    }
+    while (t--) {
+        solve();
+    }
 
     return 0;
 }

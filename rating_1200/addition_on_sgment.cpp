@@ -56,26 +56,19 @@ vector<ll> sieve(ll n) {
 // -------------------- SOLVE --------------------
 
 void solve() {
-    ll n,m;
-    cin >> n >> m;
-    vector<ll>v(m);
-    multiset<ll>ms;
-    for(int i =0;i<n;i++){
-        ll x;
+    ll n;
+    cin >> n;
+    vector<ll>v(n);
+    ll nonZero = 0;
+    ll sum =0;
+    for(auto &x:v){
         cin >> x;
-        ms.insert(x);
-    }
-    for(auto &x:v)cin >> x;
-    for(int i =0;i<m;i++){
-        auto it = ms.upper_bound(v[i]);
-        if(it==ms.begin()){
-            cout << -1 << '\n';
+        if(x!=0){
+            nonZero++;
         }
-        else{
-            cout << *(--it)<<'\n';
-            ms.erase(it);
-        }
+        sum+=x;
     }
+    cout << min(nonZero,sum-n+1) << '\n';
 
 }
 
@@ -84,12 +77,16 @@ void solve() {
 int main() {
     FastAsFuck;
 
-// #ifndef ONLINE_JUDGE
-//     freopen("input.txt", "r", stdin);
-//     freopen("output.txt", "w", stdout);
-// #endif
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
 
-    solve();
+    int t = 1;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
 
     return 0;
 }

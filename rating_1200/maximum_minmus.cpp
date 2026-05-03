@@ -56,26 +56,29 @@ vector<ll> sieve(ll n) {
 // -------------------- SOLVE --------------------
 
 void solve() {
-    ll n,m;
-    cin >> n >> m;
-    vector<ll>v(m);
-    multiset<ll>ms;
-    for(int i =0;i<n;i++){
-        ll x;
-        cin >> x;
-        ms.insert(x);
+    ll n,k;
+    cin >> n >> k;
+    vector<ll>v(n);
+    for(auto &x:v) cin >> x;
+    if(k==1){
+        cout << *min_element(v.begin(),v.end())<< '\n';
+        return;
     }
-    for(auto &x:v)cin >> x;
-    for(int i =0;i<m;i++){
-        auto it = ms.upper_bound(v[i]);
-        if(it==ms.begin()){
-            cout << -1 << '\n';
-        }
-        else{
-            cout << *(--it)<<'\n';
-            ms.erase(it);
-        }
+    if(k>2){
+        cout << *max_element(v.begin(),v.end())<<'\n';
+        return;
     }
+    ll check = *max_element(v.begin(),v.end());
+    if(v[0]==check||v[n-1]==check){
+        cout << check << '\n';
+        return;
+    }
+    vector<ll>prefMax(n);
+    prefMax[0]=v[0];
+    for(int i =1;i<n;i++){
+        prefMax[i]=min(prefMax[i-1],v[i]);
+    }
+    cout << max(prefMax[0],prefMax[n-1]) << '\n';
 
 }
 
